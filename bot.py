@@ -1,8 +1,10 @@
+import os
 import discord
 from discord.ext import commands
 from discord_slash import SlashCommand, SlashContext
-import logging
 
+# Logging setup
+import logging
 logging.basicConfig(level=logging.INFO)
 
 # Bot setup
@@ -67,8 +69,7 @@ async def on_member_join(member):
 
 @slash.slash(
     name="setleaderboardchannel",
-    description="Set the leaderboard channel for invites.",
-    guild_ids=[YOUR_GUILD_ID],  # Replace with your server ID
+    description="Set the leaderboard channel for invites."
 )
 async def set_leaderboard_channel(ctx: SlashContext, channel: discord.TextChannel):
     leaderboard_channel[ctx.guild.id] = channel.id
@@ -76,8 +77,7 @@ async def set_leaderboard_channel(ctx: SlashContext, channel: discord.TextChanne
 
 @slash.slash(
     name="showleaderboard",
-    description="Show the invite leaderboard.",
-    guild_ids=[YOUR_GUILD_ID]  # Replace with your server ID
+    description="Show the invite leaderboard."
 )
 async def show_leaderboard(ctx: SlashContext):
     guild_id = ctx.guild.id
@@ -110,4 +110,5 @@ async def on_guild_remove(guild):
     invite_cache.pop(guild.id, None)
     invite_counts.pop(guild.id, None)
 
-bot.run('YOUR_BOT_TOKEN')  # Replace with your bot token
+# Use the bot token from the environment variable
+bot.run(os.getenv("DISCORD_BOT_TOKEN"))
